@@ -497,7 +497,6 @@ BOCHSAPI void cpu_set_fp_op(unsigned id, Bit16u v) {
 
 BOCHSAPI void cpu_get_fp_st(unsigned id, unsigned reg, Bit64u *fraction, Bit16u *exp) {
     const floatx80 f = BX_CPU(id)->the_i387.st_space[reg];
-    #if VERSION
     *fraction = f.signif;
     *exp = f.signExp;
 }
