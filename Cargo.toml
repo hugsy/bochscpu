@@ -5,7 +5,7 @@ authors = ["x"]
 edition = "2024"
 
 [lib]
-crate-type = ["dylib", "rlib"]
+crate-type = ["staticlib", "rlib"]
 
 [dependencies]
 blake3 = "1"
