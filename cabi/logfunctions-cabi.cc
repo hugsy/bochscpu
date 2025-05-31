@@ -19,6 +19,8 @@ extern "C" {
 	void logfunctions_info(const char *);
 	void logfunctions_panic(const char *);
 	void logfunctions_fatal1(const char *);
+	// Added in bochs#67466a4139e24065e9d05b1ee13d2041445f82d5
+	void logfunctions_warn(const char *);
 }
 }
 
@@ -56,6 +58,20 @@ void logfunctions::fatal1(const char *fmt, ...) {
 	va_end(args);
 
 	rust::logfunctions_fatal1(buf);
+#endif
+}
+
+void logfunctions::warn(const char *fmt, ...)
+{
+#ifndef RUST_CC_RELEASE
+	char buf[0x1000];
+
+	va_list args;
+	va_start(args, fmt);
+	vsnprintf(buf, sizeof buf, fmt, args);
+	va_end(args);
+
+	rust::logfunctions_warn(buf);
 #endif
 }
 

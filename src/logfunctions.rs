@@ -21,6 +21,17 @@ extern "C-unwind" fn logfunctions_fatal1(p: *const c_char) {
 }
 
 #[unsafe(no_mangle)]
+extern "C-unwind" fn logfunctions_warn(p: *const c_char) {
+    let s = unsafe {
+        assert!(!p.is_null());
+
+        CStr::from_ptr(p).to_str().unwrap()
+    };
+
+    warn!("{}", s);
+}
+
+#[unsafe(no_mangle)]
 extern "C-unwind" fn logfunctions_info(p: *const c_char) {
     let s = unsafe {
         assert!(!p.is_null());
