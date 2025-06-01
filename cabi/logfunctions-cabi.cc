@@ -45,6 +45,8 @@ void logfunctions::error(const char *fmt, ...) {
 	va_end(args);
 
 	rust::logfunctions_error(buf);
+#else
+	(void)fmt;
 #endif
 }
 
@@ -58,6 +60,8 @@ void logfunctions::fatal1(const char *fmt, ...) {
 	va_end(args);
 
 	rust::logfunctions_fatal1(buf);
+#else
+	(void)fmt;
 #endif
 }
 
@@ -72,6 +76,24 @@ void logfunctions::warn(const char *fmt, ...)
 	va_end(args);
 
 	rust::logfunctions_warn(buf);
+#else
+	(void)fmt;
+#endif
+}
+
+void logfunctions::lwarn(const char *fmt, ...)
+{
+#ifndef RUST_CC_RELEASE
+	char buf[0x1000];
+
+	va_list args;
+	va_start(args, fmt);
+	vsnprintf(buf, sizeof buf, fmt, args);
+	va_end(args);
+
+	rust::logfunctions_lwarn(buf);
+#else
+	(void)fmt;
 #endif
 }
 
@@ -85,6 +107,8 @@ void logfunctions::info(const char *fmt, ...) {
 	va_end(args);
 
 	rust::logfunctions_info(buf);
+#else
+	(void)fmt;
 #endif
 }
 
@@ -98,6 +122,8 @@ void logfunctions::ldebug(const char *fmt, ...) {
 	va_end(args);
 
 	rust::logfunctions_ldebug(buf);
+#else
+	(void)fmt;
 #endif
 }
 
@@ -111,6 +137,8 @@ void logfunctions::panic(const char *fmt, ...) {
 	va_end(args);
 
 	rust::logfunctions_panic(buf);
+#else
+	(void)fmt;
 #endif
 }
 
