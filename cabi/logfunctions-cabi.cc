@@ -21,6 +21,7 @@ extern "C" {
 	void logfunctions_fatal1(const char *);
 	// Added in bochs#67466a4139e24065e9d05b1ee13d2041445f82d5
 	void logfunctions_warn(const char *);
+	void logfunctions_lwarn(const char *);
 }
 }
 
