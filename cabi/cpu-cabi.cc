@@ -31,14 +31,11 @@ BOCHSAPI void cpu_new(unsigned id) {
     BX_CPU(id)->sanity_checks();
 
     BX_INSTR_INITIALIZE(id);
-
-    BX_CPU(id)->lapic = new bx_local_apic_c(BX_CPU(id) , id);
 }
 
 BOCHSAPI void cpu_delete(unsigned id) {
 #if BX_SUPPORT_SMP
 
-    delete BX_CPU(id)->lapic;
     BX_CPU(id)->~BX_CPU_C();
     free(BX_CPU(id));
 
@@ -82,6 +79,14 @@ BOCHSAPI void cpu_set_pc(unsigned id, Bit64u val) {
 BOCHSAPI void cpu_set_sp(unsigned id, Bit64u val) {
     BX_CPU(id)->gen_reg[BX_64BIT_REG_RSP].rrx = val;
     BX_CPU(id)->prev_rsp = val;
+}
+
+BOCHSAPI Bit64u cpu_get_ssp(unsigned id) {
+    return BX_CPU(id)->get_ssp();
+}
+
+BOCHSAPI void cpu_set_ssp(unsigned id, Bit64u val) {
+    BX_CPU(id)->gen_reg[BX_64BIT_REG_SSP].rrx = val;
 }
 
 BOCHSAPI Bit64u cpu_get_reg64(unsigned id, unsigned reg) {
@@ -288,7 +293,9 @@ BOCHSAPI Bit32u cpu_get_cr8(unsigned id) {
 }
 
 BOCHSAPI void cpu_set_cr8(unsigned id, Bit32u v) {
+#if BX_SUPPORT_APIC
     BX_CPU(id)->lapic->set_tpr((v & 0xf) << 4);
+#endif
 }
 
 BOCHSAPI Bit32u cpu_get_efer(unsigned id) {
@@ -405,7 +412,61 @@ BOCHSAPI void cpu_set_pat(unsigned id, Bit64u v) {
     BX_CPU(id)->msr.pat._u64 = v;
 }
 
+BOCHSAPI Bit64u cpu_get_cet_control_u(unsigned id) {
+    return BX_CPU(id)->msr.ia32_cet_control[1];
+}
 
+BOCHSAPI void cpu_set_cet_control_u(unsigned id, Bit64u v) {
+    BX_CPU(id)->msr.ia32_cet_control[1] = v;
+}
+
+BOCHSAPI Bit64u cpu_get_cet_control_s(unsigned id) {
+    return BX_CPU(id)->msr.ia32_cet_control[0];
+}
+
+BOCHSAPI void cpu_set_cet_control_s(unsigned id, Bit64u v) {
+    BX_CPU(id)->msr.ia32_cet_control[0] = v;
+}
+
+BOCHSAPI Bit64u cpu_get_pl0_ssp(unsigned id) {
+    return BX_CPU(id)->msr.ia32_pl_ssp[0];
+}
+
+BOCHSAPI void cpu_set_pl0_ssp(unsigned id, Bit64u v) {
+    BX_CPU(id)->msr.ia32_pl_ssp[0] = v;
+}
+
+BOCHSAPI Bit64u cpu_get_pl1_ssp(unsigned id) {
+    return BX_CPU(id)->msr.ia32_pl_ssp[1];
+}
+
+BOCHSAPI void cpu_set_pl1_ssp(unsigned id, Bit64u v) {
+    BX_CPU(id)->msr.ia32_pl_ssp[1] = v;
+}
+
+BOCHSAPI Bit64u cpu_get_pl2_ssp(unsigned id) {
+    return BX_CPU(id)->msr.ia32_pl_ssp[2];
+}
+
+BOCHSAPI void cpu_set_pl2_ssp(unsigned id, Bit64u v) {
+    BX_CPU(id)->msr.ia32_pl_ssp[2] = v;
+}
+
+BOCHSAPI Bit64u cpu_get_pl3_ssp(unsigned id) {
+    return BX_CPU(id)->msr.ia32_pl_ssp[3];
+}
+
+BOCHSAPI void cpu_set_pl3_ssp(unsigned id, Bit64u v) {
+    BX_CPU(id)->msr.ia32_pl_ssp[3] = v;
+}
+
+BOCHSAPI Bit64u cpu_get_interrupt_ssp_table(unsigned id) {
+    return BX_CPU(id)->msr.ia32_interrupt_ssp_table;
+}
+
+BOCHSAPI void cpu_set_interrupt_ssp_table(unsigned id, Bit64u v) {
+    BX_CPU(id)->msr.ia32_interrupt_ssp_table = v;
+}
 
 // ZMM
 
