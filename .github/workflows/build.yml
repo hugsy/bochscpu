@@ -11,7 +11,7 @@ jobs:
     permissions:
       contents: read
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         os:
           - windows-2025
@@ -63,4 +63,5 @@ jobs:
             ./target/**/*.exe
             ./target/**/*.pdb
             ./target/**/*.dll
+
 
