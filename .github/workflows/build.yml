@@ -15,8 +15,9 @@ jobs:
       matrix:
         os:
           - windows-2025
-          - ubuntu-24.04
           - windows-11-arm
+          - ubuntu-24.04
+          - ubuntu-24.04-arm
         build: [debug, release]
 
     name: ${{ matrix.os }}/${{ matrix.build }}

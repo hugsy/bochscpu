@@ -1,16 +1,8 @@
 use std::env;
 
-#[cfg(all(
-    target_arch = "x86_64",
-    target_os = "windows",
-    not(target_feature = "crt-static")
-))]
+#[cfg(all(target_arch = "x86_64", target_os = "windows", debug_assertions))]
 const BOCHSCPU_BUILD_URL: &str = "https://github.com/yrp604/bochscpu-build/releases/download/v0.5/bochscpu-build-windows-latest-x64-MD.zip";
-#[cfg(all(
-    target_arch = "x86_64",
-    target_os = "windows",
-    target_feature = "crt-static"
-))]
+#[cfg(all(target_arch = "x86_64", target_os = "windows", not(debug_assertions)))]
 const BOCHSCPU_BUILD_URL: &str = "https://github.com/yrp604/bochscpu-build/releases/download/v0.5/bochscpu-build-windows-latest-x64-MT.zip";
 #[cfg(all(target_arch = "x86_64", target_os = "linux"))]
 const BOCHSCPU_BUILD_URL: &str = "https://github.com/yrp604/bochscpu-build/releases/download/v0.5/bochscpu-build-ubuntu-latest-x64.zip";
