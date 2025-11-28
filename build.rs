@@ -16,9 +16,17 @@ fn download_bochscpu_build() {
     } else {
         "Release"
     };
+
+    #[cfg(target_os = "linux")]
     let tempfile = std::path::PathBuf::from(format!(
         "{}/bochscpu-build-{}.zip",
-        std::env::var("TEMP").unwrap(),
+        std::env::var("TEMP").unwrap_or("/tmp".to_string()),
+        config
+    ));
+    #[cfg(target_os = "windows")]
+    let tempfile = std::path::PathBuf::from(format!(
+        "{}/bochscpu-build-{}.zip",
+        std::env::var("TEMP").unwrap_or("C:\\".to_string()),
         config
     ));
 

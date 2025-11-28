@@ -30,10 +30,6 @@ jobs:
           rustup component add rustfmt
           rustup show
 
-      - if: startsWith(matrix.os,  'windows')
-        run: |
-          winget install --id LLVM.LLVM --exact
-
       - if: matrix.build == 'debug'
         run: |
           cargo build --all-targets
