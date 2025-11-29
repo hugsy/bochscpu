@@ -5,7 +5,7 @@ use std::env;
 #[cfg(all(target_arch = "x86_64", target_os = "windows", debug_assertions))]
 const BOCHSCPU_BUILD_URL: &str = "https://github.com/yrp604/bochscpu-build/releases/download/v0.5/bochscpu-build-windows-latest-x64-MD.zip";
 #[cfg(all(target_arch = "x86_64", target_os = "windows", not(debug_assertions)))]
-const BOCHSCPU_BUILD_URL: &str = "https://github.com/yrp604/bochscpu-build/releases/download/v0.5/bochscpu-build-windows-latest-x64-MT.zip";
+const BOCHSCPU_BUILD_URL: &str = "https://github.com/yrp604/bochscpu-build/releases/download/v0.5/bochscpu-build-windows-latest-x64-MD.zip";
 #[cfg(all(target_arch = "aarch64", target_os = "windows", debug_assertions))]
 const BOCHSCPU_BUILD_URL: &str = "https://github.com/yrp604/bochscpu-build/releases/download/v0.5/bochscpu-build-windows-11-arm-arm64-MD.zip";
 #[cfg(all(target_arch = "aarch64", target_os = "windows", not(debug_assertions)))]
